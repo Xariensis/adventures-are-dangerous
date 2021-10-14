@@ -29,7 +29,9 @@ public class StartingScreen {
 
 
     TitleScreenHandler tsHandler = new TitleScreenHandler();
-    RunGameScreenHandler gsHandler = new RunGameScreenHandler();
+    RunGameScreenHandler rgsHandler = new RunGameScreenHandler();
+    GameScreenHandler sgHandler = new GameScreenHandler();
+
 
     Font titleFont = new Font("Papyrus", Font.PLAIN, 60);
     Font normalFont = new Font("Papyrus", Font.PLAIN, 25);
@@ -82,14 +84,26 @@ public class StartingScreen {
 
     }
     //--------------------------creates game screen---------------------------
-    public void createGameScreen() {
+    public void createGameScreen1() {
         titleNamePanel.setVisible(false);
         startButtonPanel.setVisible(false);
-        if(nextScreenButtonPanel != null){
-            nextScreenButtonPanel.setVisible(false);
-        }
+        createMainTextArea();
+        createPlayerStatsPanel();
+        createChoicePanel();
+        window.setVisible(true);
+    }
 
-        //--------------------------creates maintext---------------------------
+    public void createGameScreen2(){
+        nextScreenButtonPanel.setVisible(false);
+        playerDamagePanel.setVisible(false);
+        playerHealthPanel.setVisible(false);
+        mainTextArea.setText("What now?");
+        createPlayerStatsPanel();
+        createChoicePanel();
+        window.setVisible(true);
+    }
+
+    public void createMainTextArea(){
         mainTextPanel = new JPanel();
         mainTextPanel.setBounds(300, 50, 400, 200);
         mainTextPanel.setBackground(Color.BLACK);
@@ -104,10 +118,9 @@ public class StartingScreen {
         mainTextArea.setWrapStyleWord(true);
         mainTextArea.setEditable(false);
         mainTextPanel.add(mainTextArea);
+    }
 
-        //--------------------------creates toptext with icon---------------------------
-        createPlayerStatsPanel();
-        //--------------------------creates the 4 choice Buttons---------------------------
+    public void createChoicePanel(){
         choiceButtonPanel = new JPanel();
         choiceButtonPanel.setBounds(200,400,400,100);
         choiceButtonPanel.setBackground(Color.BLUE);
@@ -125,25 +138,25 @@ public class StartingScreen {
         choiceButton1.setForeground(Color.WHITE);
         choiceButton1.setBackground(Color.BLACK);
         choiceButton1.setFont(normalFont);
-        choiceButton1.addActionListener(gsHandler);
+        choiceButton1.addActionListener(rgsHandler);
 
         choiceButton2 = new JButton(textChoiceButton2);
         choiceButton2.setForeground(Color.WHITE);
         choiceButton2.setBackground(Color.BLACK);
         choiceButton2.setFont(normalFont);
-        choiceButton2.addActionListener(gsHandler);
+        choiceButton2.addActionListener(rgsHandler);
 
         choiceButton3 = new JButton(textChoiceButton3);
         choiceButton3.setForeground(Color.WHITE);
         choiceButton3.setBackground(Color.BLACK);
         choiceButton3.setFont(normalFont);
-        choiceButton3.addActionListener(gsHandler);
+        choiceButton3.addActionListener(rgsHandler);
 
         choiceButton4 = new JButton(textChoiceButton4);
         choiceButton4.setForeground(Color.WHITE);
         choiceButton4.setBackground(Color.BLACK);
         choiceButton4.setFont(normalFont);
-        choiceButton4.addActionListener(gsHandler);
+        choiceButton4.addActionListener(rgsHandler);
 
         choiceButtonPanel.add(choiceButton1);
         choiceButtonPanel.add(choiceButton2);
@@ -151,13 +164,6 @@ public class StartingScreen {
         choiceButtonPanel.add(choiceButton4);
 
         choiceButtonPanel.setVisible(true);
-
-
-
-        window.setVisible(true);
-
-
-
     }
 
     public void createPlayerStatsPanel() {
@@ -224,7 +230,7 @@ public class StartingScreen {
         nextScreenButton.setBackground(Color.BLACK);
         nextScreenButton.setForeground(Color.WHITE);
         nextScreenButton.setFont(normalFont);
-        nextScreenButton.addActionListener(gsHandler);
+        nextScreenButton.addActionListener(sgHandler);
         nextScreenButtonPanel.add(nextScreenButton);
 
 
@@ -243,7 +249,12 @@ public class StartingScreen {
     //--------------------------adds mouse functionality---------------------------
     public class TitleScreenHandler implements ActionListener {
         public void actionPerformed(ActionEvent event){
-            createGameScreen();
+            createGameScreen1();
+        }
+    }
+    public class GameScreenHandler implements ActionListener {
+        public void actionPerformed(ActionEvent event){
+            createGameScreen2();
         }
     }
 
