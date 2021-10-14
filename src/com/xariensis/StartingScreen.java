@@ -1,34 +1,35 @@
 package com.xariensis;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.*;
 
 
 import java.awt.*;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 public class StartingScreen {
 
     JFrame      window;
-    JPanel      titleNamePanel, startButtonPanel, choiceButtonPanel,
+    JPanel      titleNamePanel,
                 mainTextPanel, playerHealthPanel, playerDamagePanel,
-                swordImagePanel, heartImagePanel;
+                swordImagePanel, heartImagePanel,
+                nextScreenButtonPanel, startButtonPanel, choiceButtonPanel;
     JLabel      titleNameLabel,
                 pictureSwordLabel, pictureHeartLabel;
-    JButton     startButton, choiceButton1, choiceButton2, choiceButton3, choiceButton4;
+    JButton     startButton, choiceButton1, choiceButton2, choiceButton3, choiceButton4, nextScreenButton;
     JTextArea   mainTextArea, damageTextArea, heartTextArea;
     ImageIcon   imageSword, imageHeart;
+
+    Random random = new Random();
+
+    GridLayout gridlayout1 = new GridLayout(1,1);
 
 
 
     TitleScreenHandler tsHandler = new TitleScreenHandler();
-    GameScreenHandler gsHandler = new GameScreenHandler();
+    RunGameScreenHandler gsHandler = new RunGameScreenHandler();
 
     Font titleFont = new Font("Papyrus", Font.PLAIN, 60);
     Font normalFont = new Font("Papyrus", Font.PLAIN, 25);
@@ -37,6 +38,7 @@ public class StartingScreen {
     int playerHealth = 10;
     int playerLevel = 1;
     int experience = 0;
+    String textChoiceButton1, textChoiceButton2, textChoiceButton3, textChoiceButton4;
 
 
 
@@ -56,21 +58,23 @@ public class StartingScreen {
         titleNamePanel.setBackground(Color.BLACK);
         window.add(titleNamePanel);
 
-        titleNameLabel = new JLabel("Adventures are Dangerous");
+        titleNameLabel = new JLabel("TEST TITLE");
         titleNameLabel.setForeground(Color.WHITE);
         titleNameLabel.setFont(titleFont);
         titleNamePanel.add(titleNameLabel);
         //--------------------------creates button---------------------------
         startButtonPanel = new JPanel();
-        startButtonPanel.setBounds(300, 300, 200, 100 );
-        startButtonPanel.setBackground(Color.BLACK);
+        startButtonPanel.setBounds(300, 300, 200, 50 );
+        startButtonPanel.setLayout(gridlayout1);
+
         window.add(startButtonPanel);
 
         startButton = new JButton("PLAY");
-        startButton.setBackground(Color.BLACK);
-        startButton.setForeground(Color.WHITE);
+        startButton.setBackground(Color.RED);
+        startButton.setForeground(Color.BLACK);
         startButton.setFont(normalFont);
         startButton.addActionListener(tsHandler);
+
 
         startButtonPanel.add(startButton);
 
@@ -81,6 +85,10 @@ public class StartingScreen {
     public void createGameScreen() {
         titleNamePanel.setVisible(false);
         startButtonPanel.setVisible(false);
+        if(nextScreenButtonPanel != null){
+            nextScreenButtonPanel.setVisible(false);
+        }
+
         //--------------------------creates maintext---------------------------
         mainTextPanel = new JPanel();
         mainTextPanel.setBounds(300, 50, 400, 200);
@@ -99,6 +107,7 @@ public class StartingScreen {
 
         //--------------------------creates toptext with icon---------------------------
         createPlayerStatsPanel();
+        //--------------------------creates the 4 choice Buttons---------------------------
         choiceButtonPanel = new JPanel();
         choiceButtonPanel.setBounds(200,400,400,100);
         choiceButtonPanel.setBackground(Color.BLUE);
@@ -106,27 +115,31 @@ public class StartingScreen {
         GridLayout gridLayout = new GridLayout(2,2);
         choiceButtonPanel.setLayout(gridLayout);
 
+        textChoiceButton1 = "WAIT";
+        textChoiceButton2 = "RUN";
+        textChoiceButton3 = "FIGHT";
+        textChoiceButton4 = "OBSERVE";
 
 
-        choiceButton1 = new JButton("choice1");
+        choiceButton1 = new JButton(textChoiceButton1);
         choiceButton1.setForeground(Color.WHITE);
         choiceButton1.setBackground(Color.BLACK);
         choiceButton1.setFont(normalFont);
         choiceButton1.addActionListener(gsHandler);
 
-        choiceButton2 = new JButton("choice2");
+        choiceButton2 = new JButton(textChoiceButton2);
         choiceButton2.setForeground(Color.WHITE);
         choiceButton2.setBackground(Color.BLACK);
         choiceButton2.setFont(normalFont);
         choiceButton2.addActionListener(gsHandler);
 
-        choiceButton3 = new JButton("choice3");
+        choiceButton3 = new JButton(textChoiceButton3);
         choiceButton3.setForeground(Color.WHITE);
         choiceButton3.setBackground(Color.BLACK);
         choiceButton3.setFont(normalFont);
         choiceButton3.addActionListener(gsHandler);
 
-        choiceButton4 = new JButton("choice4");
+        choiceButton4 = new JButton(textChoiceButton4);
         choiceButton4.setForeground(Color.WHITE);
         choiceButton4.setBackground(Color.BLACK);
         choiceButton4.setFont(normalFont);
@@ -136,6 +149,8 @@ public class StartingScreen {
         choiceButtonPanel.add(choiceButton2);
         choiceButtonPanel.add(choiceButton3);
         choiceButtonPanel.add(choiceButton4);
+
+        choiceButtonPanel.setVisible(true);
 
 
 
@@ -199,35 +214,67 @@ public class StartingScreen {
         choiceButtonPanel.setVisible(false);
         playerHealthPanel.setVisible(false);
         playerDamagePanel.setVisible(false);
-        playerHealth--;
+
         createPlayerStatsPanel();
-        mainTextArea.setText("Your current Health has been set to "+ playerHealth+" for research purposes. Also your Damage is one less");
+        nextScreenButtonPanel = new JPanel();
+        nextScreenButtonPanel.setBounds(300, 400, 200, 100);
+        nextScreenButtonPanel.setLayout(gridlayout1);
+        window.add(nextScreenButtonPanel);
+        nextScreenButton = new JButton("I see.");
+        nextScreenButton.setBackground(Color.BLACK);
+        nextScreenButton.setForeground(Color.WHITE);
+        nextScreenButton.setFont(normalFont);
+        nextScreenButton.addActionListener(gsHandler);
+        nextScreenButtonPanel.add(nextScreenButton);
+
+
+
+
+
+
+
 
     }
     public void checkHealth(){
         if(playerHealth < 1){
-
+            //TODO
         }
     }
     //--------------------------adds mouse functionality---------------------------
     public class TitleScreenHandler implements ActionListener {
-
         public void actionPerformed(ActionEvent event){
-
             createGameScreen();
-
         }
-
     }
 
-    public class GameScreenHandler implements ActionListener {
+    public class RunGameScreenHandler implements ActionListener {
         public void actionPerformed(ActionEvent event){
 
+            int runFactor = random.nextInt(10)+1;
+
+            System.out.println(runFactor+" RUNFACTOR"); //NACHVOLLZIEHBARKEIT
+
+            if(runFactor < 5){
+                mainTextArea.setText("Your ran away.");
+            }else{
+                int runDamage = random.nextInt(4)+1;
+                mainTextArea.setText("You were unable to run away and got hit with "+runDamage+" Damage.");
+                playerHealth = playerHealth-runDamage;
+                System.out.println(runDamage+" RUNDAMAGE");
+            }
             actionGameScreen();
 
 
         }
     }
+
+    public class FightGameScreenHandler implements ActionListener{
+        public void actionPerformed(ActionEvent event){
+            //TODO
+        }
+    }
+
+
 
 
 
