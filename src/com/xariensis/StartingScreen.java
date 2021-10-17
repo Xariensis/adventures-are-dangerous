@@ -54,6 +54,22 @@ public class StartingScreen {
         window.setLayout(null);
         window.setLocationRelativeTo(null);
 
+        //--------------------------creates background---------------------------
+        /*
+
+        JPanel backgroundPanel = new JPanel();
+        backgroundPanel.setBounds(0, 0, 800, 600);
+        backgroundPanel.setBackground(Color.BLACK);
+        window.add(backgroundPanel);
+
+        JLabel backgroundLabel = new JLabel();
+
+        backgroundPanel.add(backgroundLabel);
+
+        ImageIcon imagebackground = new ImageIcon("src/res/grass.gif");
+
+        backgroundLabel.setIcon(imagebackground);
+        */
         //--------------------------creates title---------------------------
         titleNamePanel = new JPanel();
         titleNamePanel.setBounds(25, 100, 750, 100);
