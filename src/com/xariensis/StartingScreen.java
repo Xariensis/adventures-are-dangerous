@@ -30,6 +30,7 @@ public class StartingScreen {
 
     TitleScreenHandler tsHandler = new TitleScreenHandler();
     RunGameScreenHandler rgsHandler = new RunGameScreenHandler();
+    FightGameScreenHandler fgsHandler = new FightGameScreenHandler();
     GameScreenHandler sgHandler = new GameScreenHandler();
 
 
@@ -166,7 +167,7 @@ public class StartingScreen {
         choiceButton3.setForeground(Color.WHITE);
         choiceButton3.setBackground(Color.BLACK);
         choiceButton3.setFont(normalFont);
-        choiceButton3.addActionListener(rgsHandler);
+        choiceButton3.addActionListener(fgsHandler);
 
         choiceButton4 = new JButton(textChoiceButton4);
         choiceButton4.setForeground(Color.WHITE);
@@ -277,14 +278,14 @@ public class StartingScreen {
     public class RunGameScreenHandler implements ActionListener {
         public void actionPerformed(ActionEvent event){
 
-            int runFactor = random.nextInt(10)+1;
+            int runFactor = random.nextInt(10);
 
             System.out.println(runFactor+" RUNFACTOR"); //NACHVOLLZIEHBARKEIT
 
-            if(runFactor < 5){
+            if(runFactor <= 5){
                 mainTextArea.setText("Your ran away.");
             }else{
-                int runDamage = random.nextInt(4)+1;
+                int runDamage = random.nextInt(4);
                 mainTextArea.setText("You were unable to run away and got hit with "+runDamage+" Damage.");
                 playerHealth = playerHealth-runDamage;
                 System.out.println(runDamage+" RUNDAMAGE");
@@ -297,7 +298,10 @@ public class StartingScreen {
 
     public class FightGameScreenHandler implements ActionListener{
         public void actionPerformed(ActionEvent event){
-            //TODO
+            int hitFactor = random.nextInt(10);
+            if (hitFactor >= 5) {
+                int damageFactor = random.nextInt(5);
+            }
         }
     }
 
